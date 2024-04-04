@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./index.css";
+import NavigationPage from "./Page/NavigationPage";
+import { Navigate, Route, Routes } from "react-router-dom";
+import SearchPage from "./Page/SearchPage";
+import CartPage from "./Page/CartPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+        <div>
+            <NavigationPage />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <div className="mt-36 flex flex-col">
+                            <SearchPage />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/checkout"
+                    element={
+                        <div className="mt-36 flex flex-col">
+                            <CartPage />
+                        </div>
+                    }
+                />
+                <Route path="*" element={<Navigate to="/"/>} />
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
