@@ -21,13 +21,13 @@ const SearchComponent = ({
         <div className="ml-2">
             <div className="relative">
                 <input
-                    className="inline-block rounded-xl border-2 border-black mt-4 mx-8 pl-10 py-2 pr-4 text-semibold"
+                    className="inline-block rounded-xl border-2 border-black mt-4 mx-8 ml-16 pl-10 py-2 pr-4 text-semibold"
                     type="text"
                     value={searchField}
                     onKeyPress={handleSearch}
                     onChange={(e) => setSearchField(e.target.value)}
                 />
-                <div className="absolute inset-y-2 top-6 left-8 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-2 top-6 left-16 pl-3 flex items-center pointer-events-none">
                     <SearchIcon className="w-6 h-6 text-gray-600" />
                 </div>
             </div>
