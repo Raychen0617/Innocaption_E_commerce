@@ -25,7 +25,6 @@ const ShopPage = ({
                         title={product.title}
                         newPrice={product.newPrice}
                         company={product.company}
-                        color={product.color}
                         category={product.category}
                         handleAddToCart={handleAddToCart}
                         handleRemoveFromCart={handleRemoveFromCart}

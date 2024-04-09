@@ -18,7 +18,7 @@ const CartComponent = ({
 
     return (
         <div className="my-6 flex flex-col items-center justify-center">
-            <p className="mr-4 mb-4 font-bold">
+            <p className="mb-4 font-bold">
                 Total: ${totalPrice.toFixed(2)}
             </p>
             {cartItems.slice(0, 6).map((item) => (

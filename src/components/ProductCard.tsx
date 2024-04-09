@@ -5,7 +5,6 @@ interface ProductCardProps {
     title: string;
     newPrice: string;
     company: string;
-    color: string;
     category: string;
     handleAddToCart: (cartItem: CartItem) => void;
     handleRemoveFromCart: (cartItem: CartItem) => void;
@@ -22,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex flex-col items-center justify-center rounded-lg p-2 my-2 h-68 w-84 shadow-lg">
             <img src={img} alt={title} className="w-48 h-32 my-4" />
             <div className="flex flex-col justify-start">
-                <h3 className="font-medium">{title}</h3>
+                <h3 className="font-medium ">{title.length > 20 ? title.slice(0, 20) + "..." : title}</h3>
                 <div className="flex flex-row justify-between font-semibold text-gray-500">
                     <span className="text-sm">{company}</span>
                     <span className="text-sm">${newPrice}</span>

@@ -1,57 +1,71 @@
 import React, { useEffect, useState } from "react";
-import products from "../data/data";
 import ShopPage from "../components/ShopComponent";
-import { CartItem } from "../type/type";
+import { CartItem, ProductItem } from "../type/type";
 import SearchComponent from "../components/SearchComponent";
 
 const SearchPage: React.FC = () => {
-
     const [searchField, setSearchField] = useState("Search");
-    const [filteredProducts, setFilteredProducts] = useState(products);
+    const [filteredProducts, setFilteredProducts] = useState<ProductItem[]>([]);
     const [cartItems, setCartItems] = useState<CartItem[]>(() => {
         const storedCartItems = sessionStorage.getItem(`cartItems`);
-        return storedCartItems ? JSON.parse(storedCartItems) : [];  
+        return storedCartItems ? JSON.parse(storedCartItems) : [];
     });
 
     useEffect(() => {
-        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+        sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
-    // Dummy API
     useEffect(() => {
-        fetch('//dummyjson.com/test')
-            .then(res => res.json())
-            .then(data => {
-                setFilteredProducts(data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
+        fetch("https://dummyjson.com/products")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                const { products } = data;
+                const transformedProducts: ProductItem[] = products.map(
+                    (product: any) => ({
+                        img: product.images[0],
+                        title: product.title,
+                        newPrice: product.price,
+                        company: product.brand,
+                        category: product.category,
+                    })
+                );
+                setFilteredProducts(transformedProducts);
             });
     }, []);
 
     const handleSearchReset = () => {
-        setSearchField("Search");
-        setFilteredProducts(products);
+        fetch("https://dummyjson.com/products")
+            .then((response) => response.json())
+            .then((data) => {
+                const { products } = data;
+                const transformedProducts: ProductItem[] = products.map(
+                    (product: any) => ({
+                        img: product.images[0],
+                        title: product.title,
+                        newPrice: product.price,
+                        company: product.brand,
+                        category: product.category,
+                    })
+                );
+                setFilteredProducts(transformedProducts);
+            });
     };
 
-    const handleSearch = () => {
-        if (searchField.trim() === "" || searchField === "Search") {
-            setFilteredProducts(products);
-        } else {
-            const filteredProducts = products.filter(
-                (product) =>
-                    product.category
-                        .toLowerCase()
-                        .startsWith(searchField.toLowerCase()) ||
-                    product.title
-                        .toLowerCase()
-                        .includes(searchField.toLowerCase()) ||
-                    product.company
-                        .toLowerCase()
-                        .startsWith(searchField.toLowerCase())
-            );
-            setFilteredProducts(filteredProducts);
-        }
+    const handleSearch = async (searchField:string) => {
+        const searchresults = await fetch('https://dummyjson.com/products/search?q=' + searchField);
+        const data = await searchresults.json();
+        const { products } = data;
+        const transformedProducts: ProductItem[] = products.map(
+            (product: any) => ({
+                img: product.images[0],
+                title: product.title,
+                newPrice: product.price,
+                company: product.brand,
+                category: product.category,
+            })
+        );
+        setFilteredProducts(transformedProducts);
     };
 
     const handleAddToCart = (CartItem: CartItem) => {

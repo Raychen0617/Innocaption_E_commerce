@@ -9,6 +9,5 @@ export type ProductItem = {
     title: string;
     newPrice: string;
     company: string;
-    color: string;
     category: string;
 }
